@@ -1,0 +1,49 @@
+This table provides frequency-dependent absorption coefficients for a
+number of standard construction materials.  Use it to fill in rows of
+the absorp matrix.  References for data frequency dependent absorption
+coefficients of various surfaces:
+
+[1] D. E. Hall, "Musical Acoustics", 2nd Ed, Brooks/Cole Publishing,
+    1991.  Taken from the list at (A3).
+[2] B J Smith, R J Peters, S Owen, "Acoustics and noise control",
+    Adison Wesley Longman, 2nd Ed. 1998.
+[3] F. Alton Everest, "The Master Handbook of Acoustics",
+    McGraw-Hill, 3rd Ed, 1994."
+[4] http://hyperphysics.phy-astr.gsu.edu/hbase/acoustic/revmod.html#c4
+    (Apr 2008) 
+
+
+Surface absorption coefficients
+-------------------------------
+                                      Standard measurement frequencies (Hz)
+Surface material                        125  250  500  1000 2000 4000
+-------------------------------------   ---  ---  ---  ---- ---- ----
+Acoustic tile rigid mount [1]           0.2  0.4  0.7  0.8  0.6  0.4
+Acoustic tile suspended mount [1]       0.5  0.7  0.6  0.7  0.7  0.5
+Acoustical plaster [1]                  0.1  0.2  0.5  0.6  0.7  0.7
+Average acoustic tile, 3/4" thick [3]   0.1  0.3  0.8  0.85 0.75 0.65
+Brick [1]                               0.03 0.03 0.03 0.04 0.05 0.07
+Concrete block, painted [1]             0.1  0.05 0.06 0.07 0.1  0.1
+Concrete block, unpainted [1]           0.4  0.4  0.3  0.3  0.4  0.3
+Concrete poured [1]                     0.01 0.01 0.02 0.02 0.02 0.03
+Draperies, medium velour [1]            0.07 0.3  0.5  0.7  0.7  0.6
+Glazed tile, polished marble, stone [2] 0.01 0.01 0.01 0.01 0.01 0.01
+Gypsum wallboard, 1/2" on studs [1]     0.3  0.1  0.05 0.04 0.07 0.1
+Heavy carpet on concrete [1]            0.02 0.06 0.15 0.4  0.6  0.6
+Heavy carpet on felt backing [1]        0.1  0.3  0.4  0.5  0.6  0.7
+Heavy plate glass [1]                   0.2  0.06 0.04 0.03 0.02 0.02
+Ordinary plaster on lath [1]            0.2  0.15 0.1  0.05 0.04 0.05
+Ordinary window glass [1]               0.3  0.2  0.2  0.1  0.07 0.04
+Platform floor, wooden [1]              0.4  0.3  0.2  0.2  0.15 0.1
+Plywood sheet, 1/4" on studs [1]        0.6  0.3  0.1  0.1  0.1  0.1
+Upholstered seating, occupied [1]       0.4  0.6  0.8  0.9  0.9  0.9
+Upholstered seating, unoccupied [1]     0.2  0.4  0.6  0.7  0.6  0.6
+Vinyl tile on concrete [1]              0.02 0.03 0.03 0.03 0.03 0.02
+Water, eg swimming pool [2]             0.01 0.01 0.01 0.01 0.01 0.01
+Wood seating, unoccupied [1]            0.02 0.03 0.03 0.06 0.06 0.05
+Wooden pews, occupied [1]               0.4  0.4  0.7  0.7  0.8  0.7
+
+Anechoic                                1.0  1.0  1.0  1.0  1.0  1.0
+Quiet room                              0.9  0.9  0.9  0.9  0.9  0.9
+50% reflectance at all frequencies      0.75 0.75 0.75 0.75 0.75 0.75
+Very echoic room                        0.01 0.01 0.01 0.01 0.01 0.01
