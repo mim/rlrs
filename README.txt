@@ -65,7 +65,7 @@ placement of the microphone and speaker have Gaussian noise with a
 standard deviation of 2 cm added to them to simulate errors in
 placement.
 
-mex fast_expj.c
+mex fast_expj.cpp
 room = [9 5 3.5];
 mic = [4.5 2.5 1.5]+.02*randn(1,3);
 src = [5.5 2.5 1.5]+.02*randn(1,3);

@@ -12,4 +12,4 @@ function y = fast_expj(seed, N)
 % Distributable under the GPL version 3 or higher
 
 error(['Please compile the C version of this function by running ' ...
-       '"mex fast_expj.c"'])
+       '"mex fast_expj.cpp"'])
