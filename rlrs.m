@@ -205,7 +205,7 @@ chunk_size = 5000;
 x = x ./ repmat(sqrt(sum(x.^2, 2)), 1, size(x,2));
 
 % Rotate the sources by the opposite of the head rotation
-R = euler_matrix(euler_angles_for_look(look_dir));
+R = euler_matrix_for_look(look_dir);
 x = x * R';
 
 % Find largest inner product with a target for each source.

@@ -43,7 +43,7 @@ els = els * pi/180;
 ir_length = round(ir_length * sr / 4) * 4
 
 mic = center + pos_std*randn(size(center));
-rotation = euler_matrix(euler_angles_for_look(look_dir));
+rotation = euler_matrix_for_look(look_dir);
 
 for eli=1:length(els)
   for azi=1:length(azs)
