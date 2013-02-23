@@ -43,7 +43,8 @@ els = els * pi/180;
 ir_length = round(ir_length * sr / 4) * 4
 
 mic = center + pos_std*randn(size(center));
-rotation = euler_matrix(euler_angles_for_look(look_vec));
+euler_angles = euler_angles_for_look(look_vec);
+rotation = euler_matrix(euler_angles);
 
 for eli=1:length(els)
   for azi=1:length(azs)
@@ -59,7 +60,8 @@ for eli=1:length(els)
       srcs{azi,eli,rep} = src;
       
       brir{azi,eli,rep} = rlrs(room, mic, src, ir_length, absorp, ...
-                               'sr', sr, 'pos_std', jitter);
+                               'sr', sr, 'pos_std', jitter, ...
+                               'head_angles', euler_angles);
     end
     
     save(savefile);
