@@ -24,10 +24,9 @@ function rir = rlrs(room, mic, source, N, absorp, varargin)
 % 'sr' is the sampling rate, defaults to 22050
 % 'hrir_file' is the file to read CIPIC-style head-related impulse
 %    responses from, it defaults to 'subject_021_hrir'
-% 'head_angles', is a set of three Euler angles specifying the rotation
-%    of the head relative to looking down the positive x-axis.  The three
-%    angles are basically azimuth, elevation, and tilt, but see
-%    euler_matrix.m for specifics.  
+% 'look_dir', is a 3-vector specifying the direction that the head is
+%    facing in [x y z] coordinates.  For example, [1 0 0] is looking down
+%    the x-axis and [1 1 0] is looking at 45 degrees to the left.
 % 'thresh' is the lower limit of amplitude for sources to be
 %    included, in dB relative to the direct path, defaults to 120
 % 'humidity' is the relative humidity of the air, defaults to 65
@@ -41,12 +40,12 @@ function rir = rlrs(room, mic, source, N, absorp, varargin)
 % Distributable under the GPL version 3 or higher
 
 %%%%%%%%%%%%%%%%%%%% Initialization %%%%%%%%%%%%%%%%%%%%%%%%
-[humidity, temperature, thresh, pos_std, hrir_file, head_angles, sr, ...
+[humidity, temperature, thresh, pos_std, hrir_file, look_dir, sr, ...
  frac_delay, verbose] = ...
     process_options( varargin, 'humidity', 65, 'temperature', ...
                      20, 'thresh', 120, 'pos_std', 1e-3, ...
                      'hrir_file', 'subject_021_hrir', ...
-                     'head_angles', [0 0 0]', 'sr', 22050, ...
+                     'look_dir', [1 0 0], 'sr', 22050, ...
                      'frac_delay', 0, 'verbose', 0);
 
 tic
@@ -91,7 +90,7 @@ z = z + pos_std*d .* randn(size(d));
 
 
 %%%%%%%%%%%%%%%%%% Derived Quantities %%%%%%%%%%%%%%%%%%%%%%
-[azi,eli] = closest_2d_index(pos3d, head_angles, [x y z], inds);
+[azi,eli] = closest_2d_index(pos3d, look_dir, [x y z], inds);
 
 % Calculate a 6xN matrix of reflection counts off each wall
 refl = [room_num_to_refl_count(floor(x' / room(1)));
@@ -102,7 +101,7 @@ log_refl = log(1-absorp+eps)';
 log_d    = single(log(d));
 nat2dB   = single(20 / log(10));
 min_logd = -nat2dB*min(log_d);
-seeds    = double(exp(-j*2*pi*time/N));
+seeds    = double(exp(-1j*2*pi*time/N));
 
 %%%%%%%%%%%%%%%%%%%%% Combination %%%%%%%%%%%%%%%%%%%%%%%%%%
 % Loop through sources, adding in effects of everything
@@ -193,7 +192,7 @@ d = dist(target(:), x(:));
 ind = argmin(d, 1);
 
 
-function [azi,eli] = closest_2d_index(target, head_angles, x, inds)
+function [azi,eli] = closest_2d_index(target, look_dir, x, inds)
 % Find the indices of the azimuth and elevation of the closest target
 % point in 3-space to each point in x in 3-space.  Target is an Nx3
 % matrix, x is an Mx3 matrix, inds is an Nx2 matrix specifying
@@ -206,7 +205,7 @@ chunk_size = 5000;
 x = x ./ repmat(sqrt(sum(x.^2, 2)), 1, size(x,2));
 
 % Rotate the sources by the opposite of the head rotation
-R = euler_matrix(head_angles);
+R = euler_matrix(euler_angles_for_look(look_dir));
 x = x * R';
 
 % Find largest inner product with a target for each source.

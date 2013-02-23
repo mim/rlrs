@@ -29,11 +29,11 @@ function around_rirs(savefile, varargin)
 % Distributable under the GPL version 3 or higher
 
 [pos_std, azs, els, dist, reps, ir_length, sr, ...
- jitter, absorp, room, center, look_vec] = process_options(varargin, ...
+ jitter, absorp, room, center, look_dir] = process_options(varargin, ...
         'pos_std', .02, 'azs', [-90:15:90], 'els', [0:15:180], ...
         'dist', 1, 'reps', 1, 'ir_length', 15001/22050, 'sr', 22050, ...
         'jitter', 1e-3, 'absorp', [.12 .12 .12 .12 .6 .4]', ...
-        'room', [9 5 3.5], 'head_loc', [4.5 2.5 1.5], 'look_vec', [1 0 0])
+        'room', [9 5 3.5], 'head_loc', [4.5 2.5 1.5], 'look_dir', [1 0 0])
 
 % Convert to radians
 azs = azs * pi/180;
@@ -43,8 +43,7 @@ els = els * pi/180;
 ir_length = round(ir_length * sr / 4) * 4
 
 mic = center + pos_std*randn(size(center));
-euler_angles = euler_angles_for_look(look_vec);
-rotation = euler_matrix(euler_angles);
+rotation = euler_matrix(euler_angles_for_look(look_dir));
 
 for eli=1:length(els)
   for azi=1:length(azs)
@@ -61,7 +60,7 @@ for eli=1:length(els)
       
       brir{azi,eli,rep} = rlrs(room, mic, src, ir_length, absorp, ...
                                'sr', sr, 'pos_std', jitter, ...
-                               'head_angles', euler_angles);
+                               'look_dir', look_dir);
     end
     
     save(savefile);
