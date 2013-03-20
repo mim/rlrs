@@ -273,8 +273,8 @@ end
 
 % Remember how long the HRIRs are, and don't add any echos that are
 % within that time of the end, they will wrap around to the
-% beginning
-time_margin = floor(length(hrtf_cache.irs{1,1}) * sr/44100);
+% beginning. Make sure it's even.
+time_margin = floor(length(hrtf_cache.irs{1,1}) * sr/44100 / 2)*2;
 N = N + time_margin;
 
 % Initialize fields of hrtf_cache
